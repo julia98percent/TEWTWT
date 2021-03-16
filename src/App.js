@@ -6,7 +6,7 @@ import About from "./routes/About";
 import Home from "./routes/Home";
 import Writing from "./routes/Writing";
 import SignupForm from "./components/SignupForm";
-import Login from "./routes/Login";
+import Login from "./components/LoginForm";
 import PageNotFound from "./routes/404";
 import Board from "./routes/Board";
 // import { fire } from "./Firebase";
