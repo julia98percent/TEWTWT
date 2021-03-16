@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
 import Nav from "./components/Nav";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
 import About from "./routes/About";
 import Home from "./routes/Home";
 import Writing from "./routes/Writing";
-import Signup from "./routes/Signup";
+import SignupForm from "./components/SignupForm";
 import Login from "./routes/Login";
 import PageNotFound from "./routes/404";
 import Board from "./routes/Board";
+// import { fire } from "./Firebase";
+// import firebase from "firebase";
+import Profile from "./components/Profile";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,20 +23,31 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class App extends Component {
+  // constructor() {
+  //   super();
+  //   fire();
+  // }
+
+  // handleCreate = (data) => {
+  //   console.log(data);
+  // };
   render() {
     return (
       <div>
         <Router>
           <GlobalStyle />
-          <Nav ji="ji" />
+          <Nav ji={this.data} />
+          <Link to="profile">Profile</Link>
           <Switch>
             <Route path="/" exact={true} component={Home} />
             <Route path="/about" component={About} />
             <Route path="/writing" component={Writing} />
             <Route path="/board" component={Board} />
-            <Route path="/signup" component={Signup} />
+            {/* onCreate={this.handleCreate} */}
+            <SignupForm path="/signup" />
             <Route path="/login" component={Login} />
             <Route component={PageNotFound} />
+            <Route path="/profile" component={Profile} />
           </Switch>
         </Router>
       </div>
