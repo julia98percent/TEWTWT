@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
-import Template from "./components/Template";
-import Header from "./components/Header";
-import UploadPic from "./components/UploadPic";
-import InputEmoji from "./components/InputEmoji";
-import MDBox from "./components/MDBox";
+import Nav from "./components/Nav";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import About from "./routes/About";
+import Home from "./routes/Home";
+import Writing from "./routes/Writing";
+import Signup from "./routes/Signup";
+import Login from "./routes/Login";
+import PageNotFound from "./routes/404";
+import Board from "./routes/Board";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background: #ffeb5a
+    // background: #ffeb5a
   }
   textarea {
     height: 20%
@@ -16,20 +20,22 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class App extends Component {
-  state = {
-    text: "안냐세용",
-  };
   render() {
     return (
       <div>
-        <GlobalStyle />
-        <Template>
-          <Header />
-          <UploadPic />
-          <InputEmoji />
-          <MDBox />
-          {/* <대충 아이콘 /> */}
-        </Template>
+        <Router>
+          <GlobalStyle />
+          <Nav ji="ji" />
+          <Switch>
+            <Route path="/" exact={true} component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/writing" component={Writing} />
+            <Route path="/board" component={Board} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route component={PageNotFound} />
+          </Switch>
+        </Router>
       </div>
     );
   }

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 const marked = require("marked");
 
-class TextBox extends React.Component {
+class TextBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
