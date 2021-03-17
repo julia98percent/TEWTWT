@@ -9,9 +9,11 @@ import SignupForm from "./components/SignupForm";
 import Login from "./components/LoginForm";
 import PageNotFound from "./routes/404";
 import Board from "./routes/Board";
-// import { fire } from "./Firebase";
-// import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 import Profile from "./components/Profile";
+import { auth } from "./firebase.utils";
+import { use } from "marked";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -23,31 +25,41 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class App extends Component {
-  // constructor() {
-  //   super();
-  //   fire();
-  // }
-
-  // handleCreate = (data) => {
-  //   console.log(data);
-  // };
+  constructor() {
+    super();
+    this.state = {
+      user: null,
+    };
+  }
+  parentFunction = (data) => {
+    this.setState({
+      user: data,
+    });
+    console.log(data + "!!");
+  };
   render() {
     return (
       <div>
         <Router>
           <GlobalStyle />
-          <Nav ji={this.data} />
-          <Link to="profile">Profile</Link>
+          <Nav user={this.state.user} />
+
           <Switch>
+            {/* <AuthRoute
+              authenticated={authenticated}
+              path="/profile"
+              render={(props) => <Profile user={user} {...props} />}
+            /> */}
             <Route path="/" exact={true} component={Home} />
             <Route path="/about" component={About} />
             <Route path="/writing" component={Writing} />
             <Route path="/board" component={Board} />
             {/* onCreate={this.handleCreate} */}
             <SignupForm path="/signup" />
-            <Route path="/login" component={Login} />
-            <Route component={PageNotFound} />
             <Route path="/profile" component={Profile} />
+            {/* <Route path="/login" component={Login} signin={this.signin} /> */}
+            <Login parentFunction={this.parentFunction} path="/login" />
+            <Route component={PageNotFound} />
           </Switch>
         </Router>
       </div>

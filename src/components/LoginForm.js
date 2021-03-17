@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
-
+// function childFunction() {
+//   this.props.signin(this.firebaseUser);
+// }
 class LoginForm extends Component {
-  state = {
-    name: "",
-    id: "",
-    password: "",
-  };
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      id: "",
+      password: "",
+      firebaseUser: null,
+    };
+    this.childFunction = this.childFunction.bind(this);
+  }
+  // state = {
+  //   name: "",
+  //   id: "",
+  //   password: "",
+  // };
 
   handleChange = (e) => {
     this.setState({
@@ -15,6 +27,11 @@ class LoginForm extends Component {
       //Computed property names 문법 사용
       [e.target.name]: e.target.value,
     });
+  };
+  childFunction = (props) => {
+    if (props == undefined) {
+      console("아니 왜...ㅅㅂ");
+    } else this.props.parentFunction(props);
   };
 
   handleSubmit = (e) => {
@@ -24,15 +41,16 @@ class LoginForm extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.id, this.state.password)
-      .then(function (firebaseUser) {
+      .then((user) => {
         //성공하면 firebaseUser에 유저 정보 값이 담겨 넘어온다.
-        alert("loginSuccess(firebaseUser)");
-      })
-      .catch(function (error) {
-        // 실패했을 때 에러 처리
-        alert(error);
-        alert("로그인 실패");
+        console.log(user.user.email);
+        this.childFunction(user.user.email);
       });
+    // .catch(function (error) {
+    //   // 실패했을 때 에러 처리
+    //   alert(error);
+    //   alert("로그인 실패");
+    // });
   };
 
   render() {
@@ -58,7 +76,7 @@ class LoginForm extends Component {
           <div>
             {this.state.name} {this.state.id} {this.state.password}
           </div>
-          <button itype="submit">로그인</button>
+          <button type="submit">로그인</button>
         </form>
       </>
     );
