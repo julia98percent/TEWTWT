@@ -25,11 +25,8 @@ class SignupForm extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.id, this.state.password)
       .then((user) => {
-        // Signed in
-        // ...
         alert("가입해써");
         this.setState({
-          name: "",
           id: "",
           password: "",
         });
@@ -53,13 +50,13 @@ class SignupForm extends Component {
         <p>회원가입 창입니ㄷr...^^</p>
 
         <form onSubmit={this.handleSubmit}>
-          <input
+          {/* <input
             type="text"
             placeholder="name"
             name="name"
             onChange={this.handleChange}
             value={this.state.name}
-          />
+          /> */}
           <input
             type="text"
             placeholder="id"

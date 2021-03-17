@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, histoty } from "react-router-dom";
 import styled from "styled-components";
-import LoginForm from "./LoginForm";
 import LogoutBtn from "../components/LogoutBtn";
 import { auth } from "../firebase.utils";
 import firebase from "firebase/app";
@@ -14,6 +13,31 @@ const NavBlock = styled.div`
 `;
 
 class Nav extends Component {
+  childFunction = (props) => {
+    if (props == undefined) {
+      console.log("아니 왜...ㅅㅂ");
+    } else this.props.parentFunction(props);
+  };
+
+  LogoutFunc = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.childFunction(null);
+
+        alert("정상적으로 로그아웃 되었습니당!");
+        // Sign-out successful.
+        this.history.push("/");
+        console.log("props: " + this.props.user);
+      })
+      .catch((error) => {
+        // An error happened.
+        alert("에러가 발생했습니다 다시 시도해주세요");
+        console.log(error);
+      });
+  };
+
   render() {
     return (
       <NavBlock>
@@ -27,7 +51,8 @@ class Nav extends Component {
           {this.props.user ? (
             <>
               <p>Hello, {this.props.user}</p>
-              <LogoutBtn>로그아웃</LogoutBtn>
+              {/* <LogoutBtn user={this.props.user}>로그아웃</LogoutBtn> */}
+              <button onClick={() => this.LogoutFunc()}>logout</button>
             </>
           ) : (
             <>

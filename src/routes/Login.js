@@ -13,7 +13,7 @@ class LoginForm extends Component {
       password: "",
       firebaseUser: null,
     };
-    this.childFunction = this.childFunction.bind(this);
+    // this.childFunction = this.childFunction.bind(this);
   }
   // state = {
   //   name: "",
@@ -30,7 +30,7 @@ class LoginForm extends Component {
   };
   childFunction = (props) => {
     if (props == undefined) {
-      console("아니 왜...ㅅㅂ");
+      console.log("아니 왜...ㅅㅂ");
     } else this.props.parentFunction(props);
   };
 

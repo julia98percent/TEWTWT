@@ -6,7 +6,7 @@ import About from "./routes/About";
 import Home from "./routes/Home";
 import Writing from "./routes/Writing";
 import SignupForm from "./components/SignupForm";
-import Login from "./components/LoginForm";
+import Login from "./routes/Login";
 import PageNotFound from "./routes/404";
 import Board from "./routes/Board";
 import firebase from "firebase/app";
@@ -29,6 +29,7 @@ class App extends Component {
     super();
     this.state = {
       user: null,
+      authenticated: this.user != null,
     };
   }
   parentFunction = (data) => {
@@ -42,7 +43,7 @@ class App extends Component {
       <div>
         <Router>
           <GlobalStyle />
-          <Nav user={this.state.user} />
+          <Nav user={this.state.user} parentFunction={this.parentFunction} />
 
           <Switch>
             {/* <AuthRoute
@@ -56,7 +57,11 @@ class App extends Component {
             <Route path="/board" component={Board} />
             {/* onCreate={this.handleCreate} */}
             <SignupForm path="/signup" />
-            <Route path="/profile" component={Profile} />
+            <Profile
+              user={this.state.user}
+              path="/profile"
+              component={Profile}
+            />
             {/* <Route path="/login" component={Login} signin={this.signin} /> */}
             <Login parentFunction={this.parentFunction} path="/login" />
             <Route component={PageNotFound} />
