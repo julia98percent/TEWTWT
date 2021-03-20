@@ -14,6 +14,7 @@ import "firebase/auth";
 import Profile from "./components/Profile";
 import { auth } from "./firebase.utils";
 import { use } from "marked";
+import PostView from "./components/PostView";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -54,7 +55,9 @@ class App extends Component {
             <Route path="/" exact={true} component={Home} />
             <Route path="/about" component={About} />
             <Route path="/writing" component={Writing} />
-            <Route path="/board" component={Board} />
+            <Route path="/board" component={Board} exact={true} />
+            <Route path="/PostView/:no" exact={true} component={PostView} />
+
             {/* onCreate={this.handleCreate} */}
             <SignupForm path="/signup" />
             <Profile
