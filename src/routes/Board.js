@@ -11,7 +11,6 @@ function Board() {
       </select>
       <input placeholder="검색하세유~~"></input>
       <PostList />
-      <button>글 쓰기</button>
     </div>
   );
 }

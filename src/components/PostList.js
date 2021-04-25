@@ -1,4 +1,5 @@
 // PostList.js - 게시글 목록 컴포넌트
+// 제목 예시) 지원님의 3월 20일 TIL ! ❤️
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CommonTable from "./CommonTable";

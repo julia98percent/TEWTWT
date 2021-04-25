@@ -1,20 +1,10 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import Nav from "./components/Nav";
 import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
-import About from "./routes/About";
-import Home from "./routes/Home";
-import Writing from "./routes/Writing";
-import SignupForm from "./components/SignupForm";
-import Login from "./routes/Login";
-import PageNotFound from "./routes/404";
-import Board from "./routes/Board";
-import firebase from "firebase/app";
-import "firebase/auth";
-import Profile from "./components/Profile";
 import { auth } from "./firebase.utils";
-import { use } from "marked";
-import PostView from "./components/PostView";
+// import { use } from "marked";
+import AppRouter from "./components/Router";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -25,54 +15,40 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      user: null,
-      authenticated: this.user != null,
-    };
-  }
-  parentFunction = (data) => {
-    this.setState({
-      user: data,
+const App = () => {
+  const [user, setUser] = useState("");
+  const [init, setInit] = useState(false);
+  //auth.currentUser 넣으면 안됨 -> useState는 로그인 상태를 알수 없기 때문
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setUser(user.email);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setInit(true);
     });
-    console.log(data + "!!");
-  };
-  render() {
-    return (
-      <div>
-        <Router>
-          <GlobalStyle />
-          <Nav user={this.state.user} parentFunction={this.parentFunction} />
+  });
 
-          <Switch>
-            {/* <AuthRoute
-              authenticated={authenticated}
-              path="/profile"
-              render={(props) => <Profile user={user} {...props} />}
-            /> */}
-            <Route path="/" exact={true} component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/writing" component={Writing} />
-            <Route path="/board" component={Board} exact={true} />
-            <Route path="/PostView/:no" exact={true} component={PostView} />
-
-            {/* onCreate={this.handleCreate} */}
-            <SignupForm path="/signup" />
-            <Profile
-              user={this.state.user}
-              path="/profile"
-              component={Profile}
-            />
-            {/* <Route path="/login" component={Login} signin={this.signin} /> */}
-            <Login parentFunction={this.parentFunction} path="/login" />
-            <Route component={PageNotFound} />
-          </Switch>
-        </Router>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Router>
+        <GlobalStyle />
+        <>
+          {init ? (
+            <>
+              <Nav user={user} isLoggedIn={isLoggedIn} />
+              <AppRouter user={user} isLoggedIn={isLoggedIn} />
+            </>
+          ) : (
+            "초기화중입니다요....굽신굽신"
+          )}
+        </>
+      </Router>
+    </div>
+  );
+};
 
 export default App;

@@ -1,5 +1,8 @@
+//PostView 게시글 세부정보 컴포넌트
 import React, { useEffect, useState } from "react";
 import { getPostByNo } from "../Data";
+import { database } from "../firebase.utils";
+
 const PostView = ({ history, location, match }) => {
   const [data, setData] = useState({});
   //router를 통해 컴포넌트가 렌더링 될 때 컴포넌트 props로 history, location, match 객체들이 전달됨

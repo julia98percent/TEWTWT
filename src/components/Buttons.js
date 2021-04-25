@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputEmoji from "./InputEmojiBtn";
 import UploadPic from "./UploadPic";
+import UploadToBoard from "./UploadToBoard";
 
 class Buttons extends Component {
   // constructor() {
@@ -14,6 +15,7 @@ class Buttons extends Component {
       <div>
         <UploadPic />
         <InputEmoji />
+        <UploadToBoard />
       </div>
     );
   }

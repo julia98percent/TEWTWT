@@ -1,10 +1,10 @@
 import React from "react";
 
-function Profile(props) {
+function Profile(user) {
   return (
     <>
       <p>user</p>
-      <b>{props.user}+"!!!!!!!!!!!!!"</b>
+      <b>{user.user}+"!!!!!!!!!!!!!"</b>
     </>
   );
 }
